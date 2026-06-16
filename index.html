@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IRONFORGE GYM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #0A0A0A;
+      --steel:   #1C1C1E;
+      --chalk:   #F0EDE8;
+      --amber:   #F5A623;
+      --gray:    #6B6B6B;
+      --light:   #A8A8A8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--chalk);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(245,166,35,0.15);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.12em;
+      color: var(--chalk);
+    }
+
+    .nav-logo span { color: var(--amber); }
+
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: var(--light);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--amber); }
+
+    .nav-cta {
+      background: var(--amber);
+      color: var(--black);
+      padding: 10px 24px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      background: var(--black);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 140px 64px 80px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 24px;
+    }
+
+    .hero-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 7vw, 7.5rem);
+      line-height: 0.92;
+      letter-spacing: 0.04em;
+      margin-bottom: 32px;
+    }
+
+    .hero-headline em {
+      font-style: normal;
+      color: var(--amber);
+      -webkit-text-stroke: 0;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--light);
+      max-width: 380px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    .hero-actions { display: flex; gap: 16px; align-items: center; }
+
+    .btn-primary {
+      background: var(--amber);
+      color: var(--black);
+      padding: 16px 36px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-block;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .btn-ghost {
+      color: var(--chalk);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--amber); }
+    .btn-ghost::after { content: '→'; font-size: 1rem; }
+
+    .hero-stats {
+      margin-top: 72px;
+      display: flex;
+      gap: 48px;
+    }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.8rem;
+      color: var(--chalk);
+      letter-spacing: 0.05em;
+      line-height: 1;
+    }
+    .stat-num span { color: var(--amber); }
+    .stat-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--gray);
+      margin-top: 6px;
+    }
+
+    /* diagonal amber slash */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 50%;
+      width: 6px;
+      background: var(--amber);
+      transform: translateX(-50%) skewX(-4deg);
+      z-index: 3;
+    }
+
+    .hero-right {
+      background: var(--steel);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-right-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(245,166,35,0.08) 0%, transparent 60%),
+        url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=900&q=80') center/cover no-repeat;
+      filter: grayscale(40%) contrast(1.1);
+    }
+
+    .hero-right-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(28,28,30,0.7) 0%, rgba(10,10,10,0.1) 100%);
+    }
+
+    .hero-tag {
+      position: absolute;
+      bottom: 48px;
+      right: 48px;
+      background: var(--amber);
+      color: var(--black);
+      padding: 16px 24px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.12em;
+    }
+
+    /* ─── SECTION SHARED ─── */
+    section { padding: 100px 0; }
+
+    .container {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .section-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.4rem, 4vw, 3.8rem);
+      letter-spacing: 0.06em;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .section-sub {
+      color: var(--gray);
+      max-width: 520px;
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+
+    /* ─── FEATURES ─── */
+    #features { background: var(--black); }
+
+    .features-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 72px;
+      gap: 40px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .feature-card {
+      background: var(--steel);
+      padding: 48px 40px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.25s;
+    }
+    .feature-card:hover { background: #222224; }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--amber);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .feature-card:hover::before { transform: scaleX(1); }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .feature-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+
+    .feature-text {
+      font-size: 0.88rem;
+      color: var(--gray);
+      line-height: 1.75;
+    }
+
+    /* ─── PRICING ─── */
+    #pricing { background: #0D0D0D; }
+
+    .pricing-header { text-align: center; margin-bottom: 64px; }
+    .pricing-header .section-sub { margin: 0 auto; }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .pricing-card {
+      background: var(--steel);
+      padding: 48px 36px;
+      position: relative;
+    }
+
+    .pricing-card.featured {
+      background: var(--amber);
+      color: var(--black);
+    }
+
+    .plan-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 24px;
+    }
+    .pricing-card.featured .plan-label { color: rgba(0,0,0,0.55); }
+
+    .plan-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4.5rem;
+      letter-spacing: 0.02em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .plan-period {
+      font-size: 0.78rem;
+      color: var(--gray);
+      margin-bottom: 36px;
+    }
+    .pricing-card.featured .plan-period { color: rgba(0,0,0,0.55); }
+
+    .plan-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin-bottom: 32px;
+    }
+    .pricing-card.featured .plan-divider { background: rgba(0,0,0,0.15); }
+
+    .plan-features { list-style: none; margin-bottom: 44px; }
+    .plan-features li {
+      font-size: 0.88rem;
+      color: var(--light);
+      padding: 8px 0;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .pricing-card.featured .plan-features li { color: rgba(0,0,0,0.8); }
+    .plan-features li::before { content: '✓'; color: var(--amber); font-weight: 700; flex-shrink: 0; }
+    .pricing-card.featured .plan-features li::before { color: var(--black); }
+
+    .plan-btn {
+      display: block;
+      text-align: center;
+      padding: 14px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      cursor: pointer;
+    }
+    .plan-btn:hover { opacity: 0.8; }
+    .plan-btn-outline {
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--chalk);
+      background: transparent;
+    }
+    .plan-btn-dark {
+      background: var(--black);
+      color: var(--chalk);
+      border: none;
+    }
+
+    /* ─── FORM ─── */
+    #join { background: var(--black); }
+
+    .join-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .join-left { padding-top: 8px; }
+
+    .join-promise {
+      margin-top: 48px;
+      padding: 28px 32px;
+      border-left: 3px solid var(--amber);
+      background: var(--steel);
+    }
+    .join-promise p {
+      font-size: 0.88rem;
+      color: var(--light);
+      line-height: 1.7;
+    }
+    .join-promise strong { color: var(--chalk); }
+
+    /* Form */
+    .gym-form { display: flex; flex-direction: column; gap: 20px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .field-group { display: flex; flex-direction: column; gap: 8px; }
+
+    label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--light);
+    }
+
+    input, select, textarea {
+      background: var(--steel);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--chalk);
+      padding: 14px 16px;
+      font-size: 0.92rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--amber);
+    }
+
+    input::placeholder, textarea::placeholder { color: var(--gray); }
+
+    select option { background: var(--steel); }
+
+    textarea { resize: vertical; min-height: 100px; }
+
+    .form-consent {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .form-consent input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      accent-color: var(--amber);
+      margin-top: 2px;
+      padding: 0;
+    }
+
+    .form-consent span {
+      font-size: 0.8rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    .form-consent a { color: var(--amber); text-decoration: none; }
+
+    .submit-btn {
+      background: var(--amber);
+      color: var(--black);
+      border: none;
+      padding: 18px 40px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: opacity 0.2s, transform 0.2s;
+      width: 100%;
+      position: relative;
+    }
+    .submit-btn:hover:not(:disabled) { opacity: 0.88; transform: translateY(-1px); }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .form-status {
+      padding: 16px 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: none;
+    }
+    .form-status.success {
+      display: block;
+      background: rgba(52, 199, 89, 0.1);
+      border: 1px solid rgba(52, 199, 89, 0.3);
+      color: #34C759;
+    }
+    .form-status.error {
+      display: block;
+      background: rgba(255, 59, 48, 0.1);
+      border: 1px solid rgba(255, 59, 48, 0.3);
+      color: #FF3B30;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--steel);
+      padding: 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.12em;
+    }
+    .footer-logo span { color: var(--amber); }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--gray);
+    }
+
+    .footer-links { display: flex; gap: 28px; list-style: none; }
+    .footer-links a {
+      font-size: 0.75rem;
+      color: var(--gray);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--amber); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 120px 24px 60px; }
+      .hero-right { height: 280px; }
+      .hero::after { display: none; }
+
+      .features-header { flex-direction: column; align-items: flex-start; }
+      .features-grid { grid-template-columns: 1fr; gap: 2px; }
+      .pricing-grid { grid-template-columns: 1fr; gap: 2px; }
+      .join-grid { grid-template-columns: 1fr; gap: 48px; }
+      .form-row { grid-template-columns: 1fr; }
+
+      .container { padding: 0 24px; }
+      section { padding: 64px 0; }
+
+      footer { flex-direction: column; text-align: center; padding: 32px 24px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">IRON<span>FORGE</span></div>
+    <ul class="nav-links">
+      <li><a href="#features">Training</a></li>
+      <li><a href="#pricing">Plans</a></li>
+      <li><a href="#join">Join</a></li>
+    </ul>
+    <a href="#join" class="nav-cta">Start Today</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Est. 2012 · Downtown Location</p>
+      <h1 class="hero-headline">
+        BUILT<br>
+        TO BE<br>
+        <em>FORGED.</em>
+      </h1>
+      <p class="hero-sub">
+        Ironforge is where serious athletes and first-timers alike come to push limits.
+        World-class equipment, elite coaching, and a community that shows up every day.
+      </p>
+      <div class="hero-actions">
+        <a href="#join" class="btn-primary">Join Now — Free Week</a>
+        <a href="#features" class="btn-ghost">See what we offer</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">12<span>K+</span></div>
+          <div class="stat-label">Active Members</div>
+        </div>
+        <div>
+          <div class="stat-num">48</div>
+          <div class="stat-label">Weekly Classes</div>
+        </div>
+        <div>
+          <div class="stat-num">6<span>AM</span></div>
+          <div class="stat-label">Doors Open</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-right-bg"></div>
+      <div class="hero-right-overlay"></div>
+      <div class="hero-tag">NO EXCUSES</div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="container">
+      <div class="features-header">
+        <div>
+          <p class="section-label">What we offer</p>
+          <h2 class="section-title">TRAINING<br>DONE RIGHT</h2>
+        </div>
+        <p class="section-sub">Every tool, class, and trainer at Ironforge exists with one purpose: to help you become the strongest version of yourself.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <span class="feature-icon">🏋️</span>
+          <h3 class="feature-title">Free Weights Floor</h3>
+          <p class="feature-text">25,000 sq ft of Olympic platforms, power racks, and the largest free weight selection in the region. No waiting, no excuses.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🔥</span>
+          <h3 class="feature-title">Group Classes</h3>
+          <p class="feature-text">48 weekly sessions from HIIT and CrossFit-style circuits to yoga and mobility. All skill levels. Coaches who push — not just count.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🧑‍💼</span>
+          <h3 class="feature-title">Personal Training</h3>
+          <p class="feature-text">Certified trainers with average 8 years experience. Goal-specific programming updated monthly and tracked in your member dashboard.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🥗</span>
+          <h3 class="feature-title">Nutrition Coaching</h3>
+          <p class="feature-text">Because what happens outside the gym matters just as much. Get a meal plan built for your body, schedule, and goals — not a template.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🛁</span>
+          <h3 class="feature-title">Premium Locker Rooms</h3>
+          <p class="feature-text">Spa-grade showers, steam rooms, and private lockers. Towel service included on Pro and Elite plans. Start early, arrive at work fresh.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">📱</span>
+          <h3 class="feature-title">Member App</h3>
+          <p class="feature-text">Book classes, track lifts, message your trainer, and stream exclusive workout content. Everything in one place, built for people who train hard.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="container">
+      <div class="pricing-header">
+        <p class="section-label">Membership Plans</p>
+        <h2 class="section-title">PICK YOUR<br>LEVEL</h2>
+        <p class="section-sub">No lock-in contracts on any plan. Cancel anytime — though you won't want to.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <p class="plan-label">Starter</p>
+          <div class="plan-price">$39</div>
+          <p class="plan-period">/ month</p>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li>Full gym floor access</li>
+            <li>4 group classes / month</li>
+            <li>Locker room access</li>
+            <li>Member app included</li>
+          </ul>
+          <a href="#join" class="plan-btn plan-btn-outline">Get Started</a>
+        </div>
+        <div class="pricing-card featured">
+          <p class="plan-label">Pro — Most Popular</p>
+          <div class="plan-price">$79</div>
+          <p class="plan-period">/ month</p>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li>Unlimited group classes</li>
+            <li>1 PT session / month</li>
+            <li>Steam room + towel service</li>
+            <li>Nutrition check-in monthly</li>
+            <li>Guest pass (2×/month)</li>
+          </ul>
+          <a href="#join" class="plan-btn plan-btn-dark">Get Started</a>
+        </div>
+        <div class="pricing-card">
+          <p class="plan-label">Elite</p>
+          <div class="plan-price">$149</div>
+          <p class="plan-period">/ month</p>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li>Everything in Pro</li>
+            <li>4 PT sessions / month</li>
+            <li>Custom meal plan</li>
+            <li>Priority class booking</li>
+            <li>Unlimited guest passes</li>
+          </ul>
+          <a href="#join" class="plan-btn plan-btn-outline">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOIN FORM -->
+  <section id="join">
+    <div class="container">
+      <div class="join-grid">
+        <div class="join-left">
+          <p class="section-label">Ready to start</p>
+          <h2 class="section-title">YOUR FIRST<br>WEEK IS<br><span style="color:var(--amber)">FREE.</span></h2>
+          <p class="section-sub">Fill in your details and one of our team will reach out within 24 hours to set up your free trial. No card required.</p>
+          <div class="join-promise">
+            <p><strong>Our promise:</strong> We'll never spam you or share your info. You'll get one message from a real person to schedule your tour.</p>
+          </div>
+        </div>
+
+        <div class="join-right">
+          <form class="gym-form" id="gymForm" novalidate>
+            <div class="form-row">
+              <div class="field-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" placeholder="Alex" required />
+              </div>
+              <div class="field-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" placeholder="Rivera" required />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="alex@example.com" required />
+            </div>
+
+            <div class="field-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000" />
+            </div>
+
+            <div class="form-row">
+              <div class="field-group">
+                <label for="plan">Interested Plan</label>
+                <select id="plan" name="plan" required>
+                  <option value="" disabled selected>Choose a plan</option>
+                  <option value="starter">Starter — $39/mo</option>
+                  <option value="pro">Pro — $79/mo</option>
+                  <option value="elite">Elite — $149/mo</option>
+                  <option value="unsure">Not sure yet</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label for="goal">Primary Goal</label>
+                <select id="goal" name="goal">
+                  <option value="" disabled selected>Select goal</option>
+                  <option value="weight-loss">Weight Loss</option>
+                  <option value="muscle">Build Muscle</option>
+                  <option value="endurance">Endurance</option>
+                  <option value="general">General Fitness</option>
+                  <option value="sport">Sport Performance</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label for="message">Anything we should know? (optional)</label>
+              <textarea id="message" name="message" placeholder="Injuries, schedule preferences, questions..."></textarea>
+            </div>
+
+            <div class="form-consent">
+              <input type="checkbox" id="consent" name="consent" required />
+              <span>I agree to be contacted by Ironforge Gym and accept the <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a>.</span>
+            </div>
+
+            <div class="form-status" id="formStatus"></div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+              Claim My Free Week
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">IRON<span>FORGE</span></div>
+    <ul class="footer-links">
+      <li><a href="#features">Training</a></li>
+      <li><a href="#pricing">Plans</a></li>
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Ironforge Gym. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // ─── FORM SUBMISSION ───────────────────────────────────────────────────────
+    // Change this to your actual endpoint URL
+    const FORM_ENDPOINT = 'https://your-server.com/api/membership';
+
+    const form = document.getElementById('gymForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const statusEl = document.getElementById('formStatus');
+
+    function showStatus(type, message) {
+      statusEl.className = 'form-status ' + type;
+      statusEl.textContent = message;
+      statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Basic validation
+      const required = form.querySelectorAll('[required]');
+      let valid = true;
+      required.forEach(field => {
+        if (field.type === 'checkbox' && !field.checked) valid = false;
+        if (field.type !== 'checkbox' && !field.value.trim()) valid = false;
+      });
+
+      if (!valid) {
+        showStatus('error', 'Please fill in all required fields and accept the terms.');
+        return;
+      }
+
+      // Gather form data
+      const payload = {
+        firstName:  form.firstName.value.trim(),
+        lastName:   form.lastName.value.trim(),
+        email:      form.email.value.trim(),
+        phone:      form.phone.value.trim(),
+        plan:       form.plan.value,
+        goal:       form.goal.value,
+        message:    form.message.value.trim(),
+        consent:    form.consent.checked,
+        submittedAt: new Date().toISOString(),
+      };
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+      statusEl.className = 'form-status';
+
+      try {
+        const response = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (response.ok) {
+          showStatus('success', '🎉 You\'re in! We\'ll reach out within 24 hours to book your free week.');
+          form.reset();
+          submitBtn.textContent = 'Sent!';
+        } else {
+          const err = await response.text();
+          throw new Error(err || `Server responded with ${response.status}`);
+        }
+      } catch (err) {
+        console.error('Form submission error:', err);
+        showStatus('error', 'Something went wrong. Please try again or email us directly at hello@ironforge.gym');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Claim My Free Week';
+      }
+    });
+
+    // ─── NAV SCROLL EFFECT ─────────────────────────────────────────────────────
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.style.borderBottomColor = window.scrollY > 60
+        ? 'rgba(245,166,35,0.3)'
+        : 'rgba(245,166,35,0.15)';
+    });
+
+    // ─── SMOOTH CTA SCROLL FROM PRICING CARDS ──────────────────────────────────
+    document.querySelectorAll('.plan-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        document.getElementById('join').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
